@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html>
+	<title>Server Status</title>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<style>
+			
+			
+			header{
+				width: 100%; 
+				padding: 35px;
+				text-align: center;
+				font-size: 3vw;
+				font-family: 'Roboto';
+			}
+			
+			status{
+				text-align: center;
+				font-size: 1.8vw;
+				padding: 20px;
+				width: 100%;
+			}
+			
+			footer {
+   				bottom:0;
+   				position:fixed;
+   				z-index:150;
+   				_position:absolute;
+   				_top:expression(eval(document.documentElement.scrollTop+
+   				    (document.documentElement.clientHeight-this.offsetHeight)));
+   				height:35px;
+				width: 100%;
+				text-align: center;
+				font-size: 1.3vw;
+			}
+			
+			body, html {
+				height: 100%;
+				margin: 0;
+			}
+			
+			.padding{
+				height: 50px;
+			}
+			
+			.image {
+				background-image: url("w2.jpg");
+				height: 100%;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			
+			.animate-bottom {
+				position: relative;
+				-webkit-animation-name: animatebottom;
+				-webkit-animation-duration: 1s;
+				animation-name: animatebottom;
+				animation-duration: 1s
+			}
+
+			@-webkit-keyframes animatebottom {
+				from { bottom:-100px; opacity:0 } 
+				to { bottom:0px; opacity:1 }
+			}
+
+			@keyframes animatebottom { 
+				from{ bottom:-100px; opacity:0 } 
+				to{ bottom:0; opacity:1 }
+			}
+		
+			@media screen and (max-width: 800px) {
+  				header {
+  					  font-size: 5vw;
+ 				 }
+			}
+			
+			@media screen and (max-width: 800px) {
+  				footer {
+  					  font-size: 2.5vw;
+ 				 }
+			}
+			
+			@media screen and (max-width: 800px) {
+  				status {
+  					  font-size: 3.8vw;
+ 				 }
+			}
+
+			
+		</style>
+</head>
+		<script>
+			var countDownDate = <?php echo time('s') + 6 ?> * 1000;
+			var now = <?php echo time('s') ?> * 1000;
+
+			// Update the count down every 1 second
+			var x = setInterval(function() {
+
+			// Get todays date and time
+			// 1. JavaScript
+			// var now = new Date().getTime();
+			// 2. PHP
+			now = now + 1000;
+
+			// Find the distance between now an the count down date
+			var distance = countDownDate - now;
+
+			// Time calculations for days, hours, minutes and seconds
+			var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+			// Output the result in an element with id="demo"
+			document.getElementById("timer").innerHTML = seconds + "s ";
+
+			// If the count down is over, write some text 
+			if (distance == 0) {
+				clearInterval(x);
+				document.getElementById("timer").innerHTML = "Refreshing";
+				}
+			}, 1000);
+		</script>	
+<body>
+	<?php
+		header('Refresh: 6; url=http://mc.wendrian.com/w');
+		require_once('minestat.php');
+		$ms = new MineStat("mc.wendrian.com", 25565);
+	?>
+	
+	<div class="image">
+		<header> <b>Minecraft Server Status</b> </header>
+<div class='padding'>
+	<center>
+		<status>
+			<?php  
+			if ($ms->is_online()){
+				echo "Minecraft Status : <b>ONLINE.</b>";	
+			}else{
+				echo "Minecraft Status : <b>OFFLINE.</b><br>";
+				echo "Please Contact The Server Administrator.";
+			}
+			?>
+			<br>
+		</status>
+	</center>
+</div>
+<div class='padding'>
+	<center>
+		<status>
+			<?php
+				echo "Version :";
+				echo $ms->get_version();
+			?>  
+			<br>
+		</status>
+	</center>
+</div>
+<div class='padding'>
+	<center>
+		<status>
+			<?php
+				echo $ms->get_current_players();
+				echo " out of ";
+				echo $ms->get_max_players();
+				echo " Players"
+			?> 
+			<br>
+		</status>
+	</center>
+</div>
+<div class='padding'>
+	<center>
+		<status>
+			<?php
+				echo "Version :";
+				echo $ms->get_version();
+			?>
+			<br>
+		</status>
+	</center>
+</div>
+	</div>
+	<footer> Copyright by Wendrian & Alfredo </footer>
+</body>
+
+	
